@@ -20,15 +20,21 @@ class Agent:
     
     def create_prompt(self):
         if self.role=="MultidisciplinaryTeam":
-            templates = f"""Act like a multidisciplinary team of healthcare professionals.
+            templates = """Act like a multidisciplinary team of healthcare professionals.
                 You will receive a medical report of a patient visited by a Cardiologist, Psychologist, and Pulmonologist.
                 Task: Review the patient's medical report from the Cardiologist, Psychologist, and Pulmonologist, analyze them and come up with a list of 3 possible health issues of the patient.
                 Just return a list of bullet points of 3 possible health issues of the patient and for each issue provide the reason.
 
-                Cardiologist Report: {self.extra.get('cardiologist_report', '')}
-                Psychologist Report: {self.extra.get('psychologist_report', '')}
-                Pulmonologist Report: {self.extra.get('pulmonologist_report', '')}"""
-            return ChatPromptTemplate.from_template(templates)
+                Cardiologist Report: {cardiologist_report}
+                Psychologist Report: {psychologist_report}
+                Pulmonologist Report: {pulmonologist_report}"""
+            
+            prompt = ChatPromptTemplate.from_template(templates)
+            return prompt.partial(
+                cardiologist_report=str(self.extra.get('cardiologist_report', '')),
+                psychologist_report=str(self.extra.get('psychologist_report', '')),
+                pulmonologist_report=str(self.extra.get('pulmonologist_report', ''))
+            )
 
         else:
             templates = {
@@ -70,7 +76,7 @@ class Agent:
             return response.content
 
         except Exception as e:
-            return e
+            return str(e)
 
 class Cardiologist(Agent):
     def __init__(self, medical_report):
