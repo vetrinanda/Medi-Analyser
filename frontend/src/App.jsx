@@ -18,7 +18,7 @@ import FileUpload from "./components/FileUpload";
 import SpecialistCard from "./components/SpecialistCard";
 import LoadingAnalysis from "./components/LoadingAnalysis";
 
-const API_URL = "http://localhost:8000";
+const API_URL = "https://medi-analyser.onrender.com";
 
 export default function App() {
   const [file, setFile] = useState(null);
