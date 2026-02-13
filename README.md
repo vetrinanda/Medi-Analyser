@@ -124,6 +124,23 @@ The frontend will start at `http://localhost:5173`.
 
 ---
 
+## 🚀 Deployment
+
+### Backend (Render)
+
+When deploying the backend to **Render**, use the following configuration settings in your Web Service:
+
+- **Build Command:** `uv sync`
+- **Start Command:** `uv run uvicorn app.main:app --host 0.0.0.0 --port $PORT`
+- **Environment Variables:**
+    - `PYTHON_VERSION`: `3.13.11`
+    - `GOOGLE_API_KEY`: *(Your API Key)*
+- **Root Directory:** `backend` (if you are deploying from a monorepo)
+
+**Important:** Since `uv sync` installs dependencies into a virtual environment (`.venv`), you must use `uv run` in the start command to ensure `uvicorn` is found and executed within that environment.
+
+---
+
 ## 📂 Project Structure
 
 ```
